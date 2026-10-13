@@ -1,0 +1,54 @@
+No configurations were provided -- using built in recommended configuration by default.
+
+validating openapi.yaml...
+openapi.yaml:
+  12:3   warning  info-license-strict     License object should contain `url` field.
+  16:10  warning  no-server-example.com   Server `url` should not point to example.com or localhost.
+  18:10  warning  no-server-example.com   Server `url` should not point to example.com or localhost.
+  22:5   warning  tag-description         Tag object should contain `description` field.
+  23:5   warning  tag-description         Tag object should contain `description` field.
+  24:5   warning  tag-description         Tag object should contain `description` field.
+  25:5   warning  tag-description         Tag object should contain `description` field.
+  26:5   warning  tag-description         Tag object should contain `description` field.
+  27:5   warning  tag-description         Tag object should contain `description` field.
+  35:5   warning  operation-operationId   Operation object should contain `operationId` field.
+  56:7   warning  operation-4xx-response  Operation must have at least one `4XX` response.
+  70:5   warning  operation-operationId   Operation object should contain `operationId` field.
+  95:5   warning  operation-operationId   Operation object should contain `operationId` field.
+  112:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  132:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  142:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  171:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  174:7  warning  operation-4xx-response  Operation must have at least one `4XX` response.
+  185:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  206:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  219:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  251:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  256:7  warning  operation-4xx-response  Operation must have at least one `4XX` response.
+  264:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  284:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  312:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  317:7  warning  operation-4xx-response  Operation must have at least one `4XX` response.
+  332:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  359:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  373:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  395:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  416:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  423:7  warning  operation-4xx-response  Operation must have at least one `4XX` response.
+  436:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  456:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  470:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  486:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  506:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  520:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  542:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  570:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  576:7  warning  operation-4xx-response  Operation must have at least one `4XX` response.
+  586:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  606:5  warning  operation-operationId   Operation object should contain `operationId` field.
+  611:7  warning  operation-4xx-response  Operation must have at least one `4XX` response.
+
+openapi.yaml: validated in 68ms
+
+Woohoo! Your API description is valid. 🎉
+You have 45 warnings.

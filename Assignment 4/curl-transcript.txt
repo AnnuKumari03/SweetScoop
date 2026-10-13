@@ -1,0 +1,39 @@
+# Order Service HTTP Transcript
+
+Generated against the actual Express Order Service route using curl.exe. For isolation and safety, PostgreSQL and downstream services are deterministic in-process stubs; this is functional route evidence, not a real charge or delivery. Test authorization credentials and order data are fictitious.
+
+## 201 successful checkout (stubbed dependencies; no real payment/shipment)
+
+Request: `curl.exe -i -H "Authorization: Bearer <redacted test token>" -H "Content-Type: application/json" -H "Idempotency-Key: assignment-checkout-success" --data-binary '<request JSON>' http://127.0.0.1:61431/v1/orders`
+
+```http
+HTTP/1.1 201 Created
+X-Powered-By: Express
+Cache-Control: no-store
+Location: /v1/orders/ord_e8b47fd2
+Content-Type: application/json; charset=utf-8
+Content-Length: 401
+ETag: W/"191-jrWHv3Y566IPbW04zRZIHrvSD2Y"
+Date: Tue, 13 Oct 2026 11:55:51 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"id":"ord_e8b47fd2","status":"CONFIRMED","customerId":"cust_demo","addressId":"addr_demo","subtotal":10,"discount":0,"tax":0.8,"total":10.8,"couponCode":null,"items":[{"productId":"prod_demo","quantity":2,"productName":"Test Vanilla","unitPrice":5,"lineTotal":10}],"paymentId":"pay_demo","deliveryId":"del_demo","trackingUrl":"/v1/deliveries/del_demo/tracking","createdAt":"2026-10-13T11:55:51.818Z"}
+```
+
+## 422 field-level validation failure
+
+Request: `curl.exe -i -H "Authorization: Bearer <redacted test token>" -H "Content-Type: application/json" -H "Idempotency-Key: assignment-checkout-invalid" --data-binary '<request JSON>' http://127.0.0.1:61431/v1/orders`
+
+```http
+HTTP/1.1 422 Unprocessable Entity
+X-Powered-By: Express
+Content-Type: application/problem+json; charset=utf-8
+Content-Length: 331
+ETag: W/"14b-HIxQEoUFdwKSuDQE7OYFUEaUYt8"
+Date: Tue, 13 Oct 2026 11:55:51 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"type":"https://sweetscoop.example.com/errors/validation-failed","title":"Validation Failed","status":422,"detail":"The request body failed schema validation.","instance":"/v1/orders","errors":[{"field":"items.0.quantity","message":"must be >= 1"},{"field":"paymentMethod","message":"must be equal to one of the allowed values"}]}
+```

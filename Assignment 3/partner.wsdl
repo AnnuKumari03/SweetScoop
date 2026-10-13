@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sweet Scoop — Delivery Partner SOAP Contract (Assignment 03)
+  WSDL 1.1 with 6+ elements
+  Target namespace: http://partner.sweetscoop.example.com/delivery
+-->
+<definitions
+    name="DeliveryPartnerService"
+    targetNamespace="http://partner.sweetscoop.example.com/delivery"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://partner.sweetscoop.example.com/delivery"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <!-- ============================================================
+       TYPES — 6 elements
+       ============================================================ -->
+  <types>
+    <xsd:schema targetNamespace="http://partner.sweetscoop.example.com/delivery"
+                xmlns:tns="http://partner.sweetscoop.example.com/delivery"
+                elementFormDefault="qualified">
+
+      <!-- Element 1: createShipment request -->
+      <xsd:element name="createShipment">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="orderId"      type="xsd:string"/>
+            <xsd:element name="customerName" type="xsd:string"/>
+            <xsd:element name="address"      type="tns:AddressType"/>
+            <xsd:element name="items"        type="tns:ItemListType"/>
+            <xsd:element name="deliveryType" type="xsd:string" default="STANDARD"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- Element 2: createShipment response -->
+      <xsd:element name="createShipmentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="shipmentId"      type="xsd:string"/>
+            <xsd:element name="status"          type="xsd:string"/>
+            <xsd:element name="trackingNumber"  type="xsd:string"/>
+            <xsd:element name="estimatedDelivery" type="xsd:dateTime"/>
+            <xsd:element name="partnerRef"      type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- Element 3: getTrackingStatus request -->
+      <xsd:element name="getTrackingStatus">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="shipmentId" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- Element 4: getTrackingStatus response -->
+      <xsd:element name="getTrackingStatusResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="shipmentId" type="xsd:string"/>
+            <xsd:element name="status"     type="xsd:string"/>
+            <xsd:element name="events"     type="tns:EventListType"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- Element 5: cancelShipment request -->
+      <xsd:element name="cancelShipment">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="shipmentId" type="xsd:string"/>
+            <xsd:element name="reason"     type="xsd:string" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- Element 6: cancelShipment response -->
+      <xsd:element name="cancelShipmentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="shipmentId" type="xsd:string"/>
+            <xsd:element name="cancelled"  type="xsd:boolean"/>
+            <xsd:element name="message"    type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="AuthHeader">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="ApiKey" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- Reusable complex types -->
+      <xsd:complexType name="AddressType">
+        <xsd:sequence>
+          <xsd:element name="line1"      type="xsd:string"/>
+          <xsd:element name="line2"      type="xsd:string" minOccurs="0"/>
+          <xsd:element name="city"       type="xsd:string"/>
+          <xsd:element name="state"      type="xsd:string"/>
+          <xsd:element name="postalCode" type="xsd:string"/>
+          <xsd:element name="country"    type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="ItemListType">
+        <xsd:sequence>
+          <xsd:element name="item" minOccurs="1" maxOccurs="unbounded">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="productId" type="xsd:string"/>
+                <xsd:element name="name"      type="xsd:string"/>
+                <xsd:element name="quantity"  type="xsd:int"/>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="EventListType">
+        <xsd:sequence>
+          <xsd:element name="event" minOccurs="0" maxOccurs="unbounded">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="status"      type="xsd:string"/>
+                <xsd:element name="description" type="xsd:string"/>
+                <xsd:element name="location"    type="xsd:string" minOccurs="0"/>
+                <xsd:element name="timestamp"   type="xsd:dateTime"/>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <!-- SOAP Fault type -->
+      <xsd:element name="ShipmentFault">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code"    type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+            <xsd:element name="detail"  type="xsd:string" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+    </xsd:schema>
+  </types>
+
+  <!-- ============================================================
+       MESSAGES
+       ============================================================ -->
+  <message name="CreateShipmentInput">
+    <part name="parameters" element="tns:createShipment"/>
+  </message>
+  <message name="CreateShipmentOutput">
+    <part name="parameters" element="tns:createShipmentResponse"/>
+  </message>
+
+  <message name="GetTrackingStatusInput">
+    <part name="parameters" element="tns:getTrackingStatus"/>
+  </message>
+  <message name="GetTrackingStatusOutput">
+    <part name="parameters" element="tns:getTrackingStatusResponse"/>
+  </message>
+
+  <message name="CancelShipmentInput">
+    <part name="parameters" element="tns:cancelShipment"/>
+  </message>
+  <message name="CancelShipmentOutput">
+    <part name="parameters" element="tns:cancelShipmentResponse"/>
+  </message>
+
+  <message name="ShipmentFaultMessage">
+    <part name="fault" element="tns:ShipmentFault"/>
+  </message>
+  <message name="PartnerAuthHeader">
+    <part name="auth" element="tns:AuthHeader"/>
+  </message>
+
+  <!-- ============================================================
+       PORT TYPE
+       ============================================================ -->
+  <portType name="DeliveryPartnerPortType">
+
+    <operation name="createShipment">
+      <input  message="tns:CreateShipmentInput"/>
+      <output message="tns:CreateShipmentOutput"/>
+      <fault  name="ShipmentFault" message="tns:ShipmentFaultMessage"/>
+    </operation>
+
+    <operation name="getTrackingStatus">
+      <input  message="tns:GetTrackingStatusInput"/>
+      <output message="tns:GetTrackingStatusOutput"/>
+      <fault  name="ShipmentFault" message="tns:ShipmentFaultMessage"/>
+    </operation>
+
+    <operation name="cancelShipment">
+      <input  message="tns:CancelShipmentInput"/>
+      <output message="tns:CancelShipmentOutput"/>
+      <fault  name="ShipmentFault" message="tns:ShipmentFaultMessage"/>
+    </operation>
+
+  </portType>
+
+  <!-- ============================================================
+       BINDING — SOAP over HTTP POST
+       ============================================================ -->
+  <binding name="DeliveryPartnerSOAPBinding" type="tns:DeliveryPartnerPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    <operation name="createShipment">
+      <soap:operation soapAction="http://partner.sweetscoop.example.com/delivery/createShipment"/>
+      <input>
+        <soap:header message="tns:PartnerAuthHeader" part="auth" use="literal"/>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ShipmentFault">
+        <soap:fault name="ShipmentFault" use="literal"/>
+      </fault>
+    </operation>
+
+    <operation name="getTrackingStatus">
+      <soap:operation soapAction="http://partner.sweetscoop.example.com/delivery/getTrackingStatus"/>
+      <input>
+        <soap:header message="tns:PartnerAuthHeader" part="auth" use="literal"/>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ShipmentFault">
+        <soap:fault name="ShipmentFault" use="literal"/>
+      </fault>
+    </operation>
+
+    <operation name="cancelShipment">
+      <soap:operation soapAction="http://partner.sweetscoop.example.com/delivery/cancelShipment"/>
+      <input>
+        <soap:header message="tns:PartnerAuthHeader" part="auth" use="literal"/>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ShipmentFault">
+        <soap:fault name="ShipmentFault" use="literal"/>
+      </fault>
+    </operation>
+
+  </binding>
+
+  <!-- ============================================================
+       SERVICE
+       ============================================================ -->
+  <service name="DeliveryPartnerService">
+    <port name="DeliveryPartnerPort" binding="tns:DeliveryPartnerSOAPBinding">
+      <soap:address location="https://api.partner.delivery.example.com/soap/v1"/>
+    </port>
+  </service>
+
+</definitions>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sweet Scoop — SOAP createShipment response envelope (Assignment 03) -->
+<soap:Envelope
+    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:del="http://partner.sweetscoop.example.com/delivery">
+
+  <soap:Body>
+    <del:createShipmentResponse>
+      <del:shipmentId>shp_987654321</del:shipmentId>
+      <del:status>CREATED</del:status>
+      <del:trackingNumber>SS-TRK-2026-001234</del:trackingNumber>
+      <del:estimatedDelivery>2026-10-13T18:00:00Z</del:estimatedDelivery>
+      <del:partnerRef>PARTNER-REF-556677</del:partnerRef>
+    </del:createShipmentResponse>
+  </soap:Body>
+
+</soap:Envelope>

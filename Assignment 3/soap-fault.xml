@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sweet Scoop — SOAP Fault envelope (Assignment 03) -->
+<soap:Envelope
+    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:del="http://partner.sweetscoop.example.com/delivery">
+
+  <soap:Body>
+    <soap:Fault>
+      <faultcode>soap:Server</faultcode>
+      <faultstring>Shipment creation failed: address is outside the serviceable area.</faultstring>
+      <detail>
+        <del:ShipmentFault>
+          <del:code>ADDRESS_NOT_SERVICEABLE</del:code>
+          <del:message>The postal code 90210 is outside our delivery zone.</del:message>
+          <del:detail>Please check the address or choose pickup instead.</del:detail>
+        </del:ShipmentFault>
+      </detail>
+    </soap:Fault>
+  </soap:Body>
+
+</soap:Envelope>

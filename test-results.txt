@@ -1,0 +1,30 @@
+CS543 Assignment Implementation Verification
+Date: 2026-10-13
+
+Backend tests
+  Command: npm --prefix .\backend test
+  Result: PASS
+  Test suites: 9 passed, 9 total
+  Tests: 62 passed, 62 total
+  Snapshots: 0
+  Includes order placement/cancellation, profile, catalogue ETags, HTTP method
+  semantics, safe retries, SOAP fault mapping, compensation, and rate-limit
+  Retry-After behavior.
+
+OpenAPI
+  Validator: Redocly CLI
+  Result: Valid, 0 errors, 45 warnings
+  Full validator output: Assignment 4\validation.txt
+  Warnings are style/completeness items (operation IDs, documentation fields,
+  placeholder local/example server URLs, and generic 4xx response notices).
+
+Assignment artifacts
+  Assignment 2 PDFs and PNG exports have valid file signatures.
+  Assignment 2 editable diagrams, Assignment 3 WSDL and SOAP examples are
+  well-formed XML.
+  Assignment 3 ZIP contains the integration write-up, PDF, WSDL, and all three
+  SOAP XML examples.
+
+Test credentials, customer data, payment identifiers, and partner endpoints in
+the isolated HTTP route transcripts are deterministic examples. No real payment,
+shipment, or persistent customer/order data was created by those captures.

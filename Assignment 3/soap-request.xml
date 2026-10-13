@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sweet Scoop — SOAP createShipment request envelope (Assignment 03) -->
+<soap:Envelope
+    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:del="http://partner.sweetscoop.example.com/delivery">
+
+  <soap:Header>
+    <del:AuthHeader>
+      <del:ApiKey>REPLACE_WITH_PARTNER_API_KEY</del:ApiKey>
+    </del:AuthHeader>
+  </soap:Header>
+
+  <soap:Body>
+    <del:createShipment>
+      <del:orderId>ord_001</del:orderId>
+      <del:customerName>Jane Doe</del:customerName>
+      <del:address>
+        <del:line1>123 Sugar Lane</del:line1>
+        <del:line2>Apt 4B</del:line2>
+        <del:city>Sweetville</del:city>
+        <del:state>CA</del:state>
+        <del:postalCode>90210</del:postalCode>
+        <del:country>United States</del:country>
+      </del:address>
+      <del:items>
+        <del:item>
+          <del:productId>prod_001</del:productId>
+          <del:name>Strawberry Dream</del:name>
+          <del:quantity>2</del:quantity>
+        </del:item>
+        <del:item>
+          <del:productId>prod_003</del:productId>
+          <del:name>Mint Chocolate Chip</del:name>
+          <del:quantity>1</del:quantity>
+        </del:item>
+      </del:items>
+      <del:deliveryType>EXPRESS</del:deliveryType>
+    </del:createShipment>
+  </soap:Body>
+
+</soap:Envelope>
